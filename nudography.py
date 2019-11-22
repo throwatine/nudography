@@ -98,6 +98,10 @@ class Celeb:
         soup = BeautifulSoup(requests.get(self.ng_url).text, "html.parser")
         self.name = soup.select_one("div#CelebName").text[:-5].strip()
 
+        self.rating = soup.select_one("div.RatingVoteEnd").text.strip()[:-2]
+        if self.rating is None:
+            self.rating = 0
+
         if not soup.find(id="Appearances"):
             raise ValueError("{} has no appearances!".format(self.name))
 
