@@ -62,12 +62,18 @@ class Celeb:
         r = requests.post("https://www.nudography.com/Search.aspx", data={"ctl00_txtSearch": search})
         soup = BeautifulSoup(r.text, "html.parser")
 
+        found = False
+
         for link in soup.select_one("div#MainContent").find_all("a"):
             if search.lower() in link.text.lower():
                 return "https://www.nudography.com" + link["href"]
             else:
-                print('Search returned no results: {}'.format(search))
-                return None
+                found = True
+                continue
+
+        if not found:
+            print('Search returned no results: {}'.format(search))
+            return None
 
     @staticmethod
     def nude_ratings(soup):
