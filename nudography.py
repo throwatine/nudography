@@ -102,4 +102,8 @@ class Celeb:
             raise ValueError("{} has no appearances!".format(self.name))
 
         self.apps = [x for x in self.nude_ratings(soup)]
-        self.max_nudity = max([app.nudity for app in self.apps])
+
+        if len(self.apps) == 0:
+            self.max_nudity = None
+        else:
+            self.max_nudity = max([app.nudity for app in self.apps])
